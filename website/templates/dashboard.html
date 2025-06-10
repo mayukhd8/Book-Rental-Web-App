@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-4">
+    <h1 class="mb-4">User Dashboard : <br> Welcome {{ user.username}} {{ greeting }} !!</h1>
+
+    <div class="row">
+        <!-- Rented Books Section -->
+        <div class="col-md-6">
+            <div class="card shadow-lg mb-4">
+                <div class="card-header bg-success text-white">
+                    <h3 class="h5 mb-0">Books You Rented</h3>
+                </div>
+                <div class="card-body">
+                    {% if rented_books %}
+                    <ul class="list-group">
+                        {% for rental in rented_books %}
+                            <li class="list-group-item d-flex align-items-center">
+                                <img src="{{ rental.book.image.url }}" alt="{{ rental.book.title }}" class="img-thumbnail me-3" style="width: 60px; height: 80px;">
+                                <div>
+                                    <strong>{{ rental.book.title }}</strong> ({{ rental.rental_duration }} months)
+                                    <br>
+                                    <small class="text-muted">Rented on: {{ rental.rental_date|date:"M d, Y" }}</small>
+                                </div>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p class="text-muted">You haven't rented any books yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Provided Books Section -->
+        <div class="col-md-6">
+            <div class="card shadow-lg mb-4">
+                <div class="card-header bg-info text-white">
+                    <h3 class="h5 mb-0">Books You Provided for Rent</h3>
+                </div>
+                <div class="card-body">
+                    {% if provided_books %}
+                        <ul class="list-group">
+                            {% for book in provided_books %}
+
+                                    <li class="list-group-item d-flex align-items-center">
+                            <!-- Book Thumbnail -->
+                            {% if book.image %}
+                                <img src="{{ book.image.url }}" alt="{{ book.title }}"
+                                     class="img-thumbnail me-3" style="width: 60px; height: 80px;">
+                            {% else %}
+                                <div class="bg-light text-center d-flex justify-content-center align-items-center me-3"
+                                     style="width: 60px; height: 80px; border-radius: 5px;">
+                                    <i class="fas fa-book fa-2x text-secondary"></i>
+                                </div>
+                            {% endif %}
+
+                            <!-- Book Info -->
+                            <div>
+                                <strong>{{ book.title }}</strong>
+                                <br>
+                                <small class="text-muted">Available Copies: {{ book.available_copies }}</small>
+                                <br>
+                                <small class="text-muted">Price/Day: ${{ book.price }}</small>
+                            </div>
+
+                            <!-- Rental Management Options -->
+                            <div class="ms-auto">
+                                <a href="{% url 'book_update' book.id %}" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <br>
+                                <br>
+                                <form action="{% url 'book_delete' book.id %}" method="post" style="display: inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-outline-danger"
+                                            onclick="return confirm('Are you sure you want to remove this book?')">
+                                        <i class="fas fa-trash"></i> Remove
+                                    </button>
+                                </form>
+                            </div>
+                        </li>
+                            {% endfor %}
+                        </ul>
+
+                    {% else %}
+                        <p class="text-muted">You haven't provided any books for rent yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Earnings Section -->
+    <div class="card shadow-lg">
+        <div class="card-header bg-warning text-dark">
+            <h3 class="h5 mb-0">Total Earnings</h3>
+        </div>
+        <div class="card-body">
+            <h4 class="text-center text-success">${{ total_earnings }}</h4>
+        </div>
+    </div>
+
+    <div class="mt-4 text-center">
+        <a href="{% url 'book_list' %}" class="btn btn-outline-primary">Browse More Books</a>
+        <a href="{% url 'book_create' %}" class="btn btn-outline-success">Add a Book for Rent</a>
+    </div>
+</div>
+
+{% endblock %}

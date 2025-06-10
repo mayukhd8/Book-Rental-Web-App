@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="card shadow-lg">
+        <!-- Header -->
+        <div class="card-header bg-success text-white">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="h3 mb-0">Rent "{{ book.title }}"</h1>
+                <a href="{% url 'book_list' %}" class="btn btn-light btn-sm">
+                    <i class="fas fa-arrow-left"></i> Back to List
+                </a>
+            </div>
+        </div>
+
+        <!-- Body -->
+        <div class="card-body">
+            <div class="row">
+                <!-- Book Image -->
+                <div class="col-md-4 mb-4 mb-md-0">
+                    {% if book.image %}
+                    <img src="{{ book.image.url }}" alt="{{ book.title }} cover"
+                         class="img-fluid rounded shadow-sm">
+                    {% else %}
+                    <div class="bg-light text-center py-5 rounded">
+                        <i class="fas fa-book-open fa-4x text-secondary"></i>
+                        <p class="mt-2 mb-0 text-muted">No cover available</p>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Book Details and Rental Form -->
+                <div class="col-md-8">
+                    <dl class="row">
+                        <dt class="col-sm-4">Author</dt>
+                        <dd class="col-sm-8">{{ book.author }}</dd>
+
+                        <dt class="col-sm-4">Category</dt>
+                        <dd class="col-sm-8">
+                            <span class="badge bg-primary">{{ book.category.name }}</span>
+                        </dd>
+
+                        <dt class="col-sm-4">Price/Day</dt>
+                        <dd class="col-sm-8 text-success">${{ book.price }}</dd>
+
+                        <dt class="col-sm-4">Available Copies</dt>
+                        <dd class="col-sm-8">{{ book.available_copies }}</dd>
+
+                        <dt class="col-sm-4">Description</dt>
+                        <dd class="col-sm-8">{{ book.description|default:"No description available" }}</dd>
+                    </dl>
+
+                    <!-- Rental Form -->
+                    <form method="POST" class="mt-4">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <!-- Display dynamic rental price -->
+                        <div id="rentalPrice" class="mt-3 text-success fw-bold">
+
+                            Total Price: ${{ rental_prices.1|json_script:"rental-prices-data" }}
+
+                        </div>
+                        <button type="submit" class="btn btn-success btn-block mt-3">
+                            <i class="fas fa-book-reader"></i> Confirm Rental
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="card-footer bg-light">
+            <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">
+                    Added on {{ book.created_at|date:"M d, Y" }}
+                </small>
+                <a href="#" class="btn btn-outline-secondary">
+                    <i class="fas fa-home"></i> Back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript to Update Price Dynamically -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Parsing rental_prices from the backend safely
+        const rentalPrices = JSON.parse('{{ rental_prices|safe }}');
+        console.log("Rental Prices from Backend:", rentalPrices);  // Check if data is passed correctly
+
+        const rentalDurationSelect = document.querySelector('select[name="rental_duration"]');
+        const rentalPriceDisplay = document.getElementById('rentalPrice');
+
+        rentalDurationSelect.addEventListener('change', function() {
+            const selectedDuration = parseInt(this.value);
+            const newPrice = rentalPrices[selectedDuration];
+
+            if (newPrice !== undefined) {
+                rentalPriceDisplay.textContent = `Total Price: $${newPrice.toFixed(2)}`;
+            } else {
+                rentalPriceDisplay.textContent = "Total Price: $0.00";
+            }
+        });
+    });
+</script>
+
+
+<!-- Style for Consistency -->
+<style>
+    dt {
+        font-weight: 600;
+    }
+    .img-fluid {
+        max-height: 400px;
+        object-fit: cover;
+    }
+    .btn-block {
+        width: 100%;
+    }
+</style>
+{% endblock %}
