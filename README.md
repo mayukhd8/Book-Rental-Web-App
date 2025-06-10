@@ -29,6 +29,18 @@ A Django-based web application that allows users to create accounts, list books 
 ├── manage.py # Django entry point
 
 
+
+📸 Screenshots
+
+![Screenshot (48)](https://github.com/user-attachments/assets/aca0d167-d256-46f2-a5e3-2629ff2cbe5f)
+![Screenshot (47)](https://github.com/user-attachments/assets/cd5ebf22-bb32-46d6-b48b-990a6d3a70cd)
+![Screenshot (46)](https://github.com/user-attachments/assets/f7c03b45-a6d7-4200-9953-17d76585a485)
+![Screenshot (45)](https://github.com/user-attachments/assets/41c42f8b-d0f2-4283-926d-1a7934867b05)
+![Screenshot (44)](https://github.com/user-attachments/assets/414f10e2-cfeb-49a9-ad59-3eb191fc8177)
+![Screenshot (43)](https://github.com/user-attachments/assets/6bed0b0b-4c7c-453a-9236-e789c834b9f9)
+![Screenshot (42)](https://github.com/user-attachments/assets/5f36e9b7-9b2d-450d-ac13-ff7435a29675)
+![Screenshot (41)](https://github.com/user-attachments/assets/ed1d10a5-fdfa-458a-83cb-5b9a4abe629f)
+![Screenshot (40)](https://github.com/user-attachments/assets/d68b40e9-9362-4f8c-8d04-52cd8cdc8965)
 ---
 
 ## ⚙️ Installation
@@ -45,17 +57,7 @@ source venv/bin/activate   # On Windows: venv\Scripts\activate
 python -m venv venv
 source venv/bin/activate   # On Windows: venv\Scripts\activate
 
-📸 Screenshots
-
-![Screenshot (48)](https://github.com/user-attachments/assets/aca0d167-d256-46f2-a5e3-2629ff2cbe5f)
-![Screenshot (47)](https://github.com/user-attachments/assets/cd5ebf22-bb32-46d6-b48b-990a6d3a70cd)
-![Screenshot (46)](https://github.com/user-attachments/assets/f7c03b45-a6d7-4200-9953-17d76585a485)
-![Screenshot (45)](https://github.com/user-attachments/assets/41c42f8b-d0f2-4283-926d-1a7934867b05)
-![Screenshot (44)](https://github.com/user-attachments/assets/414f10e2-cfeb-49a9-ad59-3eb191fc8177)
-![Screenshot (43)](https://github.com/user-attachments/assets/6bed0b0b-4c7c-453a-9236-e789c834b9f9)
-![Screenshot (42)](https://github.com/user-attachments/assets/5f36e9b7-9b2d-450d-ac13-ff7435a29675)
-![Screenshot (41)](https://github.com/user-attachments/assets/ed1d10a5-fdfa-458a-83cb-5b9a4abe629f)
-![Screenshot (40)](https://github.com/user-attachments/assets/d68b40e9-9362-4f8c-8d04-52cd8cdc8965)
+'''
 
 
 📡 APIs & Integration
